@@ -1,6 +1,8 @@
 package at.uibk.dps.dsB.ex0.creators;
 
-import org.opt4j.core.Genotype;
+import java.util.Random;
+
+import org.opt4j.core.genotype.IntegerGenotype;
 import org.opt4j.core.problem.Creator;
 
 /**
@@ -10,12 +12,16 @@ import org.opt4j.core.problem.Creator;
  * @author Fedor Smirnov
  *
  */
-public class MyFirstCreator implements Creator<Genotype> {
+public class MyFirstCreator implements Creator<IntegerGenotype> {
 
+	protected Random random = new Random();
+	
+	// Initialize IntegerGenotype with 81 numbers for Sudoku
 	@Override
-	public Genotype create() {
-		// TODO Implement a method initializing the genotypes.
-		throw new IllegalArgumentException("Creation of genotypes not yet implemented.");
+	public IntegerGenotype create() {
+		IntegerGenotype genotype = new IntegerGenotype(1,9);
+		genotype.init(random, 81);
+		return genotype;
 	}
 
 }

@@ -1,6 +1,6 @@
 package at.uibk.dps.dsB.ex0.decoders;
 
-import org.opt4j.core.Genotype;
+import org.opt4j.core.genotype.IntegerGenotype;
 import org.opt4j.core.problem.Decoder;
 
 /**
@@ -10,12 +10,19 @@ import org.opt4j.core.problem.Decoder;
  * @author Fedor Smirnov
  *
  */
-public class MyFirstDecoder implements Decoder<Genotype, Object> {
+public class MyFirstDecoder implements Decoder<IntegerGenotype, int[][]> {
 
+	// Turn IntegerGenotype into nested array to represent Sudoku grid
 	@Override
-	public Object decode(Genotype genotype) {
-		// TODO Implement a method which transforms a given genotype into the phenotype,
-		// i.e., a representation which can be processed by the evalutor.
-		throw new IllegalArgumentException("Decoding not yet implemented.");
+	public int[][] decode(IntegerGenotype genotype) {
+		int[][] phenotype = new int[9][9];
+		
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				phenotype[i][j] = genotype.get(i*9 + j);
+			}
+		}
+		
+		return phenotype;
 	}
 }
