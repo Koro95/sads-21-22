@@ -23,8 +23,7 @@ public final class ShopMonitoringSpecification {
 	// Set this to true if the created specification should be saved to the 
 	// specified location.
 	private static final boolean SAVE_SPEC_TO_FILE = true;
-	// The path to the spec folder (TODO: you may have to adjust this if you work on
-	// Windows)
+	// The path to the spec folder ( you may have to adjust this if you work on Windows)
 	private static final String SPEC_FOLDER_PATH = "./specs/";
 	// File name for saving
 	private static final String FILE_NAME = "customerMonitoringSpec.xml";

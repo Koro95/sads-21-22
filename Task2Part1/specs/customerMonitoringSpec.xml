@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<specification xsi:schemaLocation="http://opendse.sourceforge.net http://opendse.sourceforge.net/schema.xsd" xmlns="http://opendse.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <architecture>
+    <resource id="r2">
+      <attributes>
+        <attribute name="costs" type="INT">15</attribute>
+      </attributes>
+    </resource>
+    <resource id="r3">
+      <attributes>
+        <attribute name="costs" type="INT">1</attribute>
+      </attributes>
+    </resource>
+    <resource id="r4">
+      <attributes>
+        <attribute name="costs" type="INT">1</attribute>
+      </attributes>
+    </resource>
+    <resource id="r5">
+      <attributes>
+        <attribute name="costs" type="INT">1</attribute>
+      </attributes>
+    </resource>
+    <resource id="r6">
+      <attributes>
+        <attribute name="costs" type="INT">20</attribute>
+      </attributes>
+    </resource>
+    <resource id="r7">
+      <attributes>
+        <attribute name="costs" type="INT">30</attribute>
+      </attributes>
+    </resource>
+    <resource id="r0">
+      <attributes>
+        <attribute name="costs" type="INT">5</attribute>
+      </attributes>
+    </resource>
+    <resource id="r1">
+      <attributes>
+        <attribute name="costs" type="INT">10</attribute>
+      </attributes>
+    </resource>
+    <link id="l0" source="r0" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l1" source="r0" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l2" source="r1" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l3" source="r1" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l4" source="r3" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l5" source="r4" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l6" source="r5" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l10" source="r3" destination="r5" orientation="UNDIRECTED"/>
+    <link id="l7" source="r6" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l8" source="r7" destination="r2" orientation="UNDIRECTED"/>
+    <link id="l9" source="r3" destination="r4" orientation="UNDIRECTED"/>
+    <link id="l11" source="r4" destination="r5" orientation="UNDIRECTED"/>
+  </architecture>
+  <application>
+    <task id="t4"/>
+    <task id="t5"/>
+    <task id="t0"/>
+    <task id="t1"/>
+    <task id="t2"/>
+    <task id="t3"/>
+    <communication id="c3"/>
+    <communication id="c4"/>
+    <communication id="c0"/>
+    <communication id="c1"/>
+    <communication id="c2"/>
+    <dependency id="d4" source="c1" destination="t2" orientation="DIRECTED"/>
+    <dependency id="d5" source="c2" destination="t3" orientation="DIRECTED"/>
+    <dependency id="d6" source="t2" destination="c3" orientation="DIRECTED"/>
+    <dependency id="d10" source="c4" destination="t4" orientation="DIRECTED"/>
+    <dependency id="d7" source="t3" destination="c4" orientation="DIRECTED"/>
+    <dependency id="d8" source="c3" destination="t4" orientation="DIRECTED"/>
+    <dependency id="d9" source="c3" destination="t5" orientation="DIRECTED"/>
+    <dependency id="d11" source="c4" destination="t5" orientation="DIRECTED"/>
+    <dependency id="d0" source="t0" destination="c0" orientation="DIRECTED"/>
+    <dependency id="d1" source="c0" destination="t1" orientation="DIRECTED"/>
+    <dependency id="d2" source="t1" destination="c1" orientation="DIRECTED"/>
+    <dependency id="d3" source="t1" destination="c2" orientation="DIRECTED"/>
+    <functions>
+      <function anchor="t4">
+        <attributes>
+          <attribute name="ID" type="STRING">func0</attribute>
+        </attributes>
+      </function>
+    </functions>
+  </application>
+  <mappings>
+    <mapping id="m0" source="t0" target="r0"/>
+    <mapping id="m1" source="t0" target="r1"/>
+    <mapping id="m2" source="t1" target="r1"/>
+    <mapping id="m3" source="t1" target="r2"/>
+    <mapping id="m4" source="t1" target="r6"/>
+    <mapping id="m5" source="t1" target="r7"/>
+    <mapping id="m6" source="t2" target="r2"/>
+    <mapping id="m7" source="t2" target="r6"/>
+    <mapping id="m8" source="t2" target="r7"/>
+    <mapping id="m9" source="t3" target="r6"/>
+    <mapping id="m11" source="t4" target="r3"/>
+    <mapping id="m10" source="t3" target="r7"/>
+    <mapping id="m13" source="t4" target="r5"/>
+    <mapping id="m12" source="t4" target="r4"/>
+    <mapping id="m15" source="t5" target="r4"/>
+    <mapping id="m14" source="t5" target="r3"/>
+    <mapping id="m16" source="t5" target="r5"/>
+  </mappings>
+  <routings>
+    <routing source="c3">
+      <resource id="r2"/>
+      <resource id="r3"/>
+      <resource id="r4"/>
+      <resource id="r5"/>
+      <resource id="r6"/>
+      <resource id="r7"/>
+      <resource id="r0"/>
+      <resource id="r1"/>
+      <link id="l0" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l1" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l2" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l3" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l4" source="r3" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l5" source="r4" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l6" source="r5" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l10" source="r3" destination="r5" orientation="UNDIRECTED"/>
+      <link id="l7" source="r6" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l8" source="r7" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l9" source="r3" destination="r4" orientation="UNDIRECTED"/>
+      <link id="l11" source="r4" destination="r5" orientation="UNDIRECTED"/>
+    </routing>
+    <routing source="c4">
+      <resource id="r2"/>
+      <resource id="r3"/>
+      <resource id="r4"/>
+      <resource id="r5"/>
+      <resource id="r6"/>
+      <resource id="r7"/>
+      <resource id="r0"/>
+      <resource id="r1"/>
+      <link id="l0" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l1" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l2" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l3" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l4" source="r3" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l5" source="r4" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l6" source="r5" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l10" source="r3" destination="r5" orientation="UNDIRECTED"/>
+      <link id="l7" source="r6" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l8" source="r7" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l9" source="r3" destination="r4" orientation="UNDIRECTED"/>
+      <link id="l11" source="r4" destination="r5" orientation="UNDIRECTED"/>
+    </routing>
+    <routing source="c0">
+      <resource id="r2"/>
+      <resource id="r3"/>
+      <resource id="r4"/>
+      <resource id="r5"/>
+      <resource id="r6"/>
+      <resource id="r7"/>
+      <resource id="r0"/>
+      <resource id="r1"/>
+      <link id="l0" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l1" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l2" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l3" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l4" source="r3" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l5" source="r4" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l6" source="r5" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l10" source="r3" destination="r5" orientation="UNDIRECTED"/>
+      <link id="l7" source="r6" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l8" source="r7" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l9" source="r3" destination="r4" orientation="UNDIRECTED"/>
+      <link id="l11" source="r4" destination="r5" orientation="UNDIRECTED"/>
+    </routing>
+    <routing source="c1">
+      <resource id="r2"/>
+      <resource id="r3"/>
+      <resource id="r4"/>
+      <resource id="r5"/>
+      <resource id="r6"/>
+      <resource id="r7"/>
+      <resource id="r0"/>
+      <resource id="r1"/>
+      <link id="l0" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l1" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l2" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l3" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l4" source="r3" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l5" source="r4" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l6" source="r5" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l10" source="r3" destination="r5" orientation="UNDIRECTED"/>
+      <link id="l7" source="r6" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l8" source="r7" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l9" source="r3" destination="r4" orientation="UNDIRECTED"/>
+      <link id="l11" source="r4" destination="r5" orientation="UNDIRECTED"/>
+    </routing>
+    <routing source="c2">
+      <resource id="r2"/>
+      <resource id="r3"/>
+      <resource id="r4"/>
+      <resource id="r5"/>
+      <resource id="r6"/>
+      <resource id="r7"/>
+      <resource id="r0"/>
+      <resource id="r1"/>
+      <link id="l0" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l1" source="r0" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l2" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l3" source="r1" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l4" source="r3" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l5" source="r4" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l6" source="r5" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l10" source="r3" destination="r5" orientation="UNDIRECTED"/>
+      <link id="l7" source="r6" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l8" source="r7" destination="r2" orientation="UNDIRECTED"/>
+      <link id="l9" source="r3" destination="r4" orientation="UNDIRECTED"/>
+      <link id="l11" source="r4" destination="r5" orientation="UNDIRECTED"/>
+    </routing>
+  </routings>
+</specification>
