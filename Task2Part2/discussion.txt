@@ -1,0 +1,26 @@
+Most expensive/fastest solution:
+	- every task (except recording) executed on the largest cloud resource (cpTwoLarge)
+	- cpTwoLarge has highest cost, but best performance
+	- therefore implementation has highest cost and smallest makespan
+	- logical solution if we only care about makespan --> choose resource with best performance
+	
+Cheapest/slower solution:
+	- every task (except recording) executed on cheapest fog/edge resource (router)
+	- router doesn't have cost in specification, so cheapest resource, but bad performance
+	- therefore implementation has cheapest cost and longest makespan
+	- logical solution if we only care about cost --> execute everything on bought fog/edge resource
+	
+------------------------------
+NOTES:
+CostEvaluator:
+	- Communication Tasks --> If links of routing have cost, add them for each transmission
+	- Computation Tasks:
+		- Add cloud cost every time with cost * performance
+		- Add fog/edge to Set and only add cost of each bought resource once at the end
+
+TimingEvaluator:
+	- Algorithm from lecture:
+		1. Check if all predecessors finished
+		2. Set start time as latest predecessor finish time
+		3. Calculate own finish time
+		4. Repeat until all tasks have finish time
