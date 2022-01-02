@@ -1,5 +1,7 @@
 package at.uibk.dps.sds.t3.homework;
 
+import org.opt4j.core.start.Constant;
+
 import com.google.inject.Inject;
 
 import net.sf.opendse.encoding.mapping.MappingConstraintGenerator;
@@ -12,8 +14,13 @@ public class HomeworkMappingConstraintManager implements MappingConstraintManage
 	protected final HomeworkMappingEncoding homeWorkMappingEncoding;
 
 	@Inject
-	public HomeworkMappingConstraintManager(SpecificationWrapper specWrapper) {
-		this.homeWorkMappingEncoding = new HomeworkMappingEncoding(specWrapper);
+	public HomeworkMappingConstraintManager(SpecificationWrapper specWrapper,
+			@Constant(value = "noSecretTaskOnCloud", namespace = HomeworkMappingEncoding.class) boolean encodeNoSecretTaskOnCloud,
+			@Constant(value = "secretMessagesSameRegion", namespace = HomeworkMappingEncoding.class) boolean encodeSecretMessagesSameRegion,
+			@Constant(value = "maxTwoTasksEdgeResource", namespace = HomeworkMappingEncoding.class) boolean encodeMaxTwoTasksEdgeResource,
+			@Constant(value = "taskMappingNecessity", namespace = HomeworkMappingEncoding.class) boolean encodeTaskMappingNecessity) {
+		this.homeWorkMappingEncoding = new HomeworkMappingEncoding(specWrapper, encodeNoSecretTaskOnCloud,
+				encodeSecretMessagesSameRegion, encodeMaxTwoTasksEdgeResource, encodeTaskMappingNecessity);
 	}
 
 	@Override
