@@ -76,12 +76,10 @@ public class HomeworkMappingEncoding implements MappingConstraintGenerator {
 	 */
 	protected Set<Constraint> encodeNoSecretTaskOnCloudConstraints(Mappings<Task, Resource> mappings) {
 		Set<Constraint> result = new HashSet<>();
-		Set<Resource> resources = new HashSet<>();
 		for (Mapping<Task, Resource> m : mappings) {
-			resources.add(m.getTarget());
-		}
-		for (Resource res : resources) {
-			result.add(encodeNoSecretTaskOnCloudConstraint(mappings.get(res)));
+			if (PropertyService.isSecret(m.getSource()) && PropertyService.isCloud(m.getTarget())) {
+				result.add(encodeNoSecretTaskOnCloudConstraint(m));
+			}
 		}
 		return result;
 	}
@@ -89,20 +87,18 @@ public class HomeworkMappingEncoding implements MappingConstraintGenerator {
 	/**
 	 * Encodes that secret tasks cannot be executed on cloud resources.
 	 * 
-	 * T.secret && R.cloud = 0
+	 * Mapping.TR = 0
 	 * 
 	 * @param resMapping the resource mappings on that resource
 	 * @return the constraint preventing secret tasks to be executed on cloud
 	 *         resources
 	 */
-	protected Constraint encodeNoSecretTaskOnCloudConstraint(Set<Mapping<Task, Resource>> resMappings) {
+	protected Constraint encodeNoSecretTaskOnCloudConstraint(Mapping<Task, Resource> m) {
 		Constraint result = new Constraint(Operator.EQ, 0);
-		for (Mapping<Task, Resource> m : resMappings) {
-			if (PropertyService.isSecret(m.getSource()) && PropertyService.isCloud(m.getTarget())) {
-				M mVar = Variables.varM(m);
-				result.add(Variables.p(mVar));
-			}
-		}
+
+		M mVar = Variables.varM(m);
+		result.add(Variables.p(mVar));
+
 		return result;
 	}
 
@@ -118,6 +114,7 @@ public class HomeworkMappingEncoding implements MappingConstraintGenerator {
 		Application<Task, Dependency> application = this.spec.getApplication();
 		Collection<Task> tasks = application.getVertices();
 
+		// Check pre- and successor of communication tasks
 		for (Task task : tasks) {
 			if (task.getClass() == Communication.class) {
 				Collection<Task> predecessors = application.getPredecessors(task);
@@ -133,8 +130,18 @@ public class HomeworkMappingEncoding implements MappingConstraintGenerator {
 								Set<Mapping<Task, Resource>> predecessorMappings = mappings.get(predecessor);
 								Set<Mapping<Task, Resource>> successorMappings = mappings.get(successor);
 
-								result.add(encodeSecretMessagesSameRegionConstraint(predecessorMappings,
-										successorMappings));
+								// If they don't have the same region, add SAT constraint
+								for (Mapping<Task, Resource> predecessorMapping : predecessorMappings) {
+									Resource predecessorResource = predecessorMapping.getTarget();
+									for (Mapping<Task, Resource> successorMapping : successorMappings) {
+										Resource successorResource = successorMapping.getTarget();
+										if (!PropertyService.getRegion(predecessorResource)
+												.equals(PropertyService.getRegion(successorResource))) {
+											result.add(encodeSecretMessagesSameRegionConstraint(predecessorMapping,
+													successorMapping));
+										}
+									}
+								}
 							}
 						}
 					}
@@ -148,31 +155,23 @@ public class HomeworkMappingEncoding implements MappingConstraintGenerator {
 	/**
 	 * Encodes that tasks of secret messages are in the same region
 	 * 
-	 * T1.resource && T2.resource == 0
+	 * M1 + M2 <= 1
 	 * 
 	 * @param task        the communication task
 	 * @param application the application
 	 * @return the constraint preventing secret message tasks from being in
 	 *         different regions
 	 */
-	protected Constraint encodeSecretMessagesSameRegionConstraint(Set<Mapping<Task, Resource>> predecessorMappings,
-			Set<Mapping<Task, Resource>> successorMappings) {
-		Constraint result = new Constraint(Operator.EQ, 0);
+	protected Constraint encodeSecretMessagesSameRegionConstraint(Mapping<Task, Resource> predecessorMapping,
+			Mapping<Task, Resource> successorMapping) {
+		Constraint result = new Constraint(Operator.LE, 1);
 
-		for (Mapping<Task, Resource> predecessorMapping : predecessorMappings) {
-			Resource predecessorResource = predecessorMapping.getTarget();
-			M mVar1 = Variables.varM(predecessorMapping);
-			for (Mapping<Task, Resource> successorMapping : successorMappings) {
-				Resource successorResource = successorMapping.getTarget();
-				result.add(new Term(-1, Variables.p(mVar1)));
-				if (!PropertyService.getRegion(predecessorResource)
-						.equals(PropertyService.getRegion(successorResource))) {
-					M mVar2 = Variables.varM(successorMapping);
-					result.add(Variables.n(mVar2));
-				}
-			}
-		}
+		M mVar1 = Variables.varM(predecessorMapping);
+		M mVar2 = Variables.varM(successorMapping);
 
+		result.add(Variables.p(mVar1));
+		result.add(Variables.p(mVar2));
+		
 		return result;
 	}
 
@@ -190,7 +189,9 @@ public class HomeworkMappingEncoding implements MappingConstraintGenerator {
 			resources.add(m.getTarget());
 		}
 		for (Resource res : resources) {
-			result.add(encodeMaxTwoTasksEdgeResourceConstraint(mappings.get(res)));
+			if (PropertyService.isEdge(res)) {
+				result.add(encodeMaxTwoTasksEdgeResourceConstraint(mappings.get(res)));
+			}
 		}
 		return result;
 	}

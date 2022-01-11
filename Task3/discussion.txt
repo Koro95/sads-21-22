@@ -1,0 +1,33 @@
+Part 1:
+	- No Constrains -> doesn't map anything (cost 0)
+	- +encodeTaskMappingNecessity -> map both tasks on the cheaper resource (cost 2)
+	- +encodeNoResourceSharing -> has to map tasks on different resources (cost 3)
+	
+Part 2:
+
+ConstraintEvaluator:
+	- similar to last week, count violations and add them as objective
+	- can only be evaluated after a solution has been generated
+	
+SAT Encoding:
+	- encodeTaskMappingNecessityConstraint -> same as from example
+		--> - T + sum (M) >= 0
+	- encodeMaxTwoTasksEdgeResourceConstraints -> adapted from example encodeNoResourceSharing
+	  for edge resources and 2 instead of 1
+	  	--> sum (M(R)) <= 2
+	- encodeNoSecretTaskOnCloudConstraints -> Mapping = 0, if task secret and resource cloud
+		--> Mapping.SecretCloud = 0
+	- encodeSecretMessagesSameRegionConstraints -> if the tasks of the two messages are secret and
+		in different regions, only one of the mappings can be active (not both at the same time)
+		--> M1 + M2 <= 1
+		
+Comparison:
+	- standard settings for specification, but function length between 4 and 5 and compared
+	  similar difficult looking specifications (5 to 6 creates often creates too large
+	  specifications, maybe a benchmark specification to compare the methods?)
+	- Evaluator: 6+s per iteration
+	- SAT: ~1s for a little more complex looking one
+	- SAT seems to scale better, as it can be evaluated with good researched solvers and solutions
+	  could be excluded, when one variable makes a solution impossible (pruning)
+	- But also depends if all the SAT encoding constraints can be simplified to something that is
+	  easy to evaluate. Bad SAT encodings could also make the problem harder for the solver.
