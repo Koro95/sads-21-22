@@ -10,6 +10,7 @@
     <property name="numCloudClusters">3</property>
     <property name="maxEdgeResPerCluster">5</property>
     <property name="maxCloudResPerCluster">5</property>
+    <property name="randomSeed">42</property>
   </module>
   <module class="at.uibk.dps.sds.t3.modules.HwCostEvaluatorModule">
     <property name="costPerCloudMapping">1</property>

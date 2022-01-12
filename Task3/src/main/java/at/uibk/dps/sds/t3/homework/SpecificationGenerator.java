@@ -34,6 +34,7 @@ public class SpecificationGenerator implements SpecificationWrapper {
 
 	protected final Specification spec;
 	protected final Rand rand;
+	protected long seed;
 
 	protected final double secrecy;
 
@@ -58,8 +59,10 @@ public class SpecificationGenerator implements SpecificationWrapper {
 			@Constant(value = "numCloudClusters", namespace = SpecificationGenerator.class) int numCloudClusters,
 			@Constant(value = "maxNumResEdge", namespace = SpecificationGenerator.class) int maxEdgeResPerCluster,
 			@Constant(value = "maxNumResCloud", namespace = SpecificationGenerator.class) int maxCloudResPerCluster,
-			Rand rand) {
+			@Constant(value = "randomSeed", namespace = SpecificationGenerator.class) long seed, Rand rand) {
 		this.rand = rand;
+		this.seed = seed;
+		this.rand.setSeed(this.seed);
 		this.secrecy = secrecy;
 		this.spec = generateSpec(funcNum, minLength, maxLength, maxNumSucc, secrecy, numEdgeClusters, numCloudClusters,
 				maxEdgeResPerCluster, maxCloudResPerCluster);
