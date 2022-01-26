@@ -43,6 +43,7 @@ public class StructureTermGenerator {
 		Mappings<Task, Resource> mappings = impl.getMappings();
 		Routings<Task, Resource, Link> routings = impl.getRoutings();
 
+		// overall list of terms to combine them at the end
 		List<Term> termList = new ArrayList<Term>();
 
 		for (Task task : tasks) {
@@ -88,6 +89,7 @@ public class StructureTermGenerator {
 				List<Term> computationTaskTerms = new ArrayList<Term>();
 				List<Integer> coefficients = new ArrayList<Integer>();
 
+				// add terms for resources of computations
 				for (Mapping<Task, Resource> mapping : taskMappings) {
 					Resource resource = mapping.getTarget();
 					computationTaskTerms.add(new LiteralTerm<Resource>(resource));

@@ -1,0 +1,41 @@
+Given Failure Model:
+	1. The overall application is functional iff all of its tasks and all of its messages are functional
+	2. A message is functional iff all resources and links which are part of the message's routing graph
+	   are functional
+	3. A task is functional iff at least one of the resources that the task is mapped onto is functional
+	   (multi-mapping is allowed)
+	4. Furthermore, to account for the low processing power of the available resources, Bob introduces a
+	   constraint on the number of tasks which can be placed on a single resource (this number can be
+	   adjusted using the maxTasksPerResource parameter in the ReliabilitySpec module)
+
+
+Implementation of generateStructureTerm:
+	- Split up in communication and computation tasks like the last weeks
+	- Communication Tasks (Failure Model 2.):
+		- Create list for terms
+		- Add all links of the routing to the terms
+		- Add pre- and successor resources to the terms
+		- ANDTerm with the list of links and resources of a message
+	- Computation Tasks (Failure Model 3.):
+		- Create list of terms
+		- Add all resources the task is mapped onto to the terms
+		- Coefficient of 1 for each resource
+		- LinearTerm with the coefficients+resources with Comparator >=1
+	- No we have a term for each task that specifies, if the task is functional
+	- ANDTerm of all the task terms (Failure Model 1.)
+	- Failure Model 4. can be changed in the specification generator GUI
+	
+Results:
+	- Add Random Module to generate same specification for comparison
+	- MTTF is better (larger), if maxTasksPerRes is larger (e.g. seed=245):
+		- maxTasksPerRes = 2 --> MTTF = 21.03
+		- maxTasksPerRes = 5 --> MTTF = 21.88
+		- maxTasksPerRes = 10 --> MTTF = 23.89
+	- Consistent with expected behavior when increasing maxTasksPerRes:
+		- Failure Model 3. has more resources to map the tasks onto
+		- Only 1 of those resources has to be functional
+		- Less likely all fail at the same time
+		- But optimization takes longer (more mapping possibilities)
+	- Difficult cases:
+		- Cases, where SSA is violated (e.g. lecture 3, pages 88/89)
+		- Couldn't replicate an example case with the specification generator
